@@ -12,6 +12,3 @@ RewriteRule ^includes/ - [F,L]
 # Block access to hidden files
 RewriteRule ^\. - [F,L]
 
-# PHP error handling
-php_flag display_errors off
-php_flag log_errors on
