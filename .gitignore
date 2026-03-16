@@ -1,6 +1,7 @@
 # Environment
 .env
 config/database.local.php
+config/database.php
 
 # Uploads
 uploads/*
