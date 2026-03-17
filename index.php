@@ -13,7 +13,7 @@ $featured = $db->query("
     FROM businesses b
     LEFT JOIN business_categories bc ON b.id = bc.business_id
     LEFT JOIN categories c ON bc.category_id = c.id
-    LEFT JOIN reviews r ON b.id = r.business_id AND (r.hidden IS NULL OR r.hidden = 0)
+    LEFT JOIN reviews r ON b.id = r.business_id
     WHERE b.status = 'active'
     GROUP BY b.id
     ORDER BY b.is_verified DESC, b.subscription_plan_id DESC, avg_rating DESC
