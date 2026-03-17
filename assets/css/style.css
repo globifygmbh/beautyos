@@ -1192,10 +1192,10 @@ select.form-control {
 }
 
 .stat-card .stat-value {
-    font-size: 2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 800;
     color: var(--gray-900);
-    margin: 8px 0 4px;
+    margin: 6px 0 4px;
 }
 
 .stat-card .stat-label {

@@ -85,9 +85,13 @@ if ($_dbBiz) {
 .db-sidebar-bottom a:hover { background:#ebe5ff; }
 
 /* Content Area */
-.db-content { flex:1; padding:28px 32px; min-width:0; }
+.db-content { flex:1; padding:24px 28px; min-width:0; }
+.db-content h1 { font-size:1.4rem; }
+.db-content h2 { font-size:1.15rem; }
+.db-content h3 { font-size:1rem; }
+.db-content h4 { font-size:0.875rem; }
 .db-page-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
-.db-page-header h1 { font-size:1.5rem; font-weight:700; color:var(--gray-900); margin:0 0 4px; }
+.db-page-header h1 { font-size:1.3rem; font-weight:800; color:var(--gray-900); margin:0 0 4px; }
 .db-subtitle { font-size:0.85rem; color:#9080b0; margin:0; }
 
 /* DB Cards */
@@ -106,7 +110,7 @@ if ($_dbBiz) {
 }
 .db-kpi:hover { transform:translateY(-2px); }
 .db-kpi .kpi-label { font-size:0.75rem; color:#9080b0; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:8px; }
-.db-kpi .kpi-value { font-size:1.7rem; font-weight:800; color:var(--gray-900); line-height:1; }
+.db-kpi .kpi-value { font-size:1.4rem; font-weight:800; color:var(--gray-900); line-height:1; }
 .db-kpi .kpi-sub { font-size:0.78rem; color:#9080b0; margin-top:6px; }
 .db-kpi .kpi-icon { position:absolute; right:16px; top:50%; transform:translateY(-50%); width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; }
 

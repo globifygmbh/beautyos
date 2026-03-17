@@ -1,7 +1,7 @@
 <?php
 $pageTitle = 'E-Mail & Newsletter';
 $adminPage = 'mail';
-require_once __DIR__ . '/../config/app.php';
+require_once __DIR__ . '/../includes/header.php';
 requireAdmin();
 
 $db = getDB();

@@ -132,9 +132,15 @@ $_pendingBusinesses = $db->query("SELECT COUNT(*) FROM businesses WHERE status='
 /* ============ CONTENT ============ */
 .admin-content {
     flex: 1;
-    padding: 28px 32px;
+    padding: 24px 28px;
     min-width: 0;
 }
+
+/* Scope heading sizes inside admin */
+.admin-content h1 { font-size: 1.4rem; }
+.admin-content h2 { font-size: 1.15rem; }
+.admin-content h3 { font-size: 1rem; }
+.admin-content h4 { font-size: 0.875rem; }
 
 /* Page Header */
 .admin-page-header {
@@ -146,8 +152,8 @@ $_pendingBusinesses = $db->query("SELECT COUNT(*) FROM businesses WHERE status='
     gap: 12px;
 }
 .admin-page-header h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
+    font-size: 1.3rem;
+    font-weight: 800;
     color: var(--gray-900);
     margin: 0 0 4px;
 }
@@ -178,7 +184,7 @@ $_pendingBusinesses = $db->query("SELECT COUNT(*) FROM businesses WHERE status='
     letter-spacing: 0.06em;
 }
 .kpi-card .kpi-value {
-    font-size: 1.85rem;
+    font-size: 1.45rem;
     font-weight: 800;
     color: var(--gray-900);
     line-height: 1;
