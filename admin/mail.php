@@ -478,7 +478,7 @@ require_once __DIR__ . '/../includes/admin-nav.php';
 </div>
 <?php endif; ?>
 
-</div></div><!-- close db-content + db-layout -->
+<!-- end mail content -->
 
 <script>
 function insertHtml(open, close) {
@@ -516,4 +516,4 @@ document.getElementById('nlContent')?.addEventListener('input', updatePreview);
 document.addEventListener('DOMContentLoaded', updatePreview);
 </script>
 
-<?php require_once __DIR__ . '/../includes/footer.php'; ?>
+<?php require_once __DIR__ . '/../includes/admin-footer.php'; ?>
