@@ -86,7 +86,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book']) && verifyCsrf
         $endTime = date('H:i', strtotime($time) + $svc['duration_minutes'] * 60);
         $db->prepare("INSERT INTO bookings (user_id,business_id,service_id,booking_date,start_time,end_time,total_price,notes) VALUES (?,?,?,?,?,?,?,?)")
            ->execute([$_SESSION['user_id'], $biz['id'], $serviceId, $date, $time, $endTime, $svc['price'], $notes]);
-        setFlash('success', 'Buchung erfolgreich! Du erhältst eine Bestätigung.');
+        $newBookingId = $db->lastInsertId();
+
+        // Send confirmation emails
+        try {
+            require_once __DIR__ . '/includes/Mailer.php';
+            $customer = currentUser();
+            $newBooking = ['booking_date' => $date, 'booking_time' => $time, 'total_price' => $svc['price'], 'id' => $newBookingId];
+            Mailer::sendBookingConfirmation($newBooking, $biz, $svc, $customer);
+            // Notify business owner
+            $bizOwnerStmt = $db->prepare("SELECT * FROM users WHERE id=?");
+            $bizOwnerStmt->execute([$biz['user_id']]);
+            $bizOwner = $bizOwnerStmt->fetch();
+            if ($bizOwner) {
+                Mailer::sendNewBookingNotification($newBooking, $svc, $customer, $biz, $bizOwner);
+            }
+            (new Mailer())->processQueue(5);
+        } catch (Throwable $e) { error_log('[Mail] ' . $e->getMessage()); }
+
+        setFlash('success', 'Buchung erfolgreich! Du erhältst eine Bestätigung per E-Mail.');
         header('Location: /business.php?slug=' . urlencode($slug) . '#booking');
         exit;
     } else {

@@ -45,6 +45,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $userId = $db->lastInsertId();
             $_SESSION['user_id'] = $userId;
 
+            // Welcome email (non-blocking)
+            try {
+                require_once __DIR__ . '/includes/Mailer.php';
+                Mailer::sendWelcome($email, $firstName);
+                (new Mailer())->processQueue(3);
+            } catch (Throwable $e) { error_log('[Mail] ' . $e->getMessage()); }
+
             if ($role === 'business') {
                 header('Location: /dashboard/setup.php');
             } else {

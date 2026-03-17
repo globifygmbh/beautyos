@@ -23,6 +23,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && verifyCsrf()) {
     if (isset($actions[$action]) && $targetId) {
         $db->prepare($actions[$action][0])->execute([$targetId]);
         setFlash('success', $actions[$action][1]);
+
+        // Send email notifications
+        if (in_array($action, ['approve', 'suspend', 'activate'])) {
+            try {
+                require_once __DIR__ . '/../includes/Mailer.php';
+                $bizRow = $db->prepare("SELECT b.*, u.email, u.first_name, u.last_name FROM businesses b JOIN users u ON b.user_id=u.id WHERE b.id=?");
+                $bizRow->execute([$targetId]);
+                $bizData = $bizRow->fetch();
+                if ($bizData) {
+                    $user = ['email' => $bizData['email'], 'first_name' => $bizData['first_name']];
+                    if ($action === 'approve') {
+                        Mailer::sendBusinessApproved($bizData, $user);
+                    } elseif ($action === 'suspend') {
+                        Mailer::sendBusinessRejected($bizData, $user, 'Dein Profil wurde vorübergehend gesperrt. Bitte kontaktiere uns für weitere Informationen.');
+                    }
+                    // Process queue inline (try to send immediately)
+                    (new Mailer())->processQueue(5);
+                }
+            } catch (Throwable $e) { error_log('[Mail] ' . $e->getMessage()); }
+        }
     }
 
     header('Location: /admin/businesses.php?' . http_build_query(array_filter(['filter' => $_POST['filter'] ?? ''])));

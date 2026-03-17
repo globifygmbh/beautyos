@@ -341,6 +341,9 @@ label.admin-label {
         <a href="/admin/legal.php" class="<?= $adminPage==='legal' ? 'active' : '' ?>">
             <i class="fas fa-file-contract nav-icon"></i> Rechtliches
         </a>
+        <a href="/admin/mail.php" class="<?= $adminPage==='mail' ? 'active' : '' ?>">
+            <i class="fas fa-envelope nav-icon"></i> E-Mail & Newsletter
+        </a>
 
         <div class="admin-nav-section">Links</div>
         <a href="/" target="_blank"><i class="fas fa-globe nav-icon"></i> Website</a>

@@ -276,6 +276,68 @@ CREATE TABLE `search_logs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- ============================================
+-- NEWSLETTER SUBSCRIBERS
+-- ============================================
+CREATE TABLE `newsletter_subscribers` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `email` VARCHAR(255) NOT NULL UNIQUE,
+    `user_id` INT DEFAULT NULL,
+    `token` VARCHAR(64) NOT NULL,
+    `confirmed` TINYINT(1) NOT NULL DEFAULT 1,
+    `subscribed_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `unsubscribed_at` DATETIME DEFAULT NULL,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE SET NULL,
+    INDEX `idx_email` (`email`),
+    INDEX `idx_token` (`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- ============================================
+-- NEWSLETTERS
+-- ============================================
+CREATE TABLE `newsletters` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `subject` VARCHAR(255) NOT NULL,
+    `preview_text` VARCHAR(255) DEFAULT NULL,
+    `content_html` LONGTEXT NOT NULL,
+    `status` ENUM('draft','sending','sent') NOT NULL DEFAULT 'draft',
+    `recipient_count` INT NOT NULL DEFAULT 0,
+    `sent_at` DATETIME DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- ============================================
+-- BUSINESS FOLLOWS
+-- ============================================
+CREATE TABLE `business_follows` (
+    `user_id` INT NOT NULL,
+    `business_id` INT NOT NULL,
+    `notify_news` TINYINT(1) NOT NULL DEFAULT 1,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (`user_id`, `business_id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`business_id`) REFERENCES `businesses`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- ============================================
+-- EMAIL QUEUE
+-- ============================================
+CREATE TABLE `email_queue` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `to_email` VARCHAR(255) NOT NULL,
+    `to_name` VARCHAR(255) DEFAULT NULL,
+    `subject` VARCHAR(500) NOT NULL,
+    `body_html` LONGTEXT NOT NULL,
+    `status` ENUM('pending','sent','failed') NOT NULL DEFAULT 'pending',
+    `attempts` INT NOT NULL DEFAULT 0,
+    `last_error` TEXT DEFAULT NULL,
+    `scheduled_at` DATETIME DEFAULT NULL,
+    `sent_at` DATETIME DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_status` (`status`),
+    INDEX `idx_scheduled` (`scheduled_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- ============================================
 -- STRIPE PAYMENTS
 -- ============================================
 CREATE TABLE `stripe_payments` (
