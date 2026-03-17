@@ -216,3 +216,9 @@ INSERT INTO `subscription_plans` (`name`, `slug`, `price_monthly`, `max_images`,
 ('Starter', 'starter', 29.99, 5, 0, 0, 0, 1, 1, '["Basiseintrag", "Bis zu 5 Bilder", "Buchungssystem", "Bewertungen"]'),
 ('Professional', 'professional', 59.99, 20, 1, 1, 0, 1, 2, '["Alles aus Starter", "Bis zu 20 Bilder", "Design-Anpassungen", "Prioritaets-Listing", "Statistiken"]'),
 ('Premium', 'premium', 99.99, 50, 1, 1, 1, 1, 3, '["Alles aus Professional", "Bis zu 50 Bilder", "Featured Badge", "Top-Platzierung", "Premium Support", "Social Media Integration"]');
+
+-- ============================================
+-- ADMIN USER (Passwort: admin123)
+-- ============================================
+INSERT INTO `users` (`email`, `password_hash`, `first_name`, `last_name`, `role`, `email_verified_at`) VALUES
+('admin@beautyos.at', '$2y$12$8ki9mLkQbd/g3KpXj3kXWuRytV/874Z4UiFhMup3M9p5xmiTQb7aO', 'Admin', 'BeautyOS', 'admin', NOW());
