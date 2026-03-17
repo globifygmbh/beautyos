@@ -196,40 +196,13 @@ $categories = $db->query("
             <a href="/marketplace.php" class="btn btn-outline btn-sm">Alle ansehen <i class="fas fa-arrow-right" style="margin-left:6px;"></i></a>
         </div>
         <div class="home-biz-grid">
-            <?php if (empty($featured)):
-                $demoCards = [
-                    ['name'=>'Salon Elegance','city'=>'Wien','cat'=>'Friseur','rating'=>4.8,'reviews'=>124,'verified'=>true],
-                    ['name'=>'Nail Art Studio','city'=>'Graz','cat'=>'Nagelstudio','rating'=>4.9,'reviews'=>89,'verified'=>false],
-                    ['name'=>'Glow Kosmetik','city'=>'Salzburg','cat'=>'Kosmetik','rating'=>4.7,'reviews'=>67,'verified'=>true],
-                    ['name'=>'The Barber Club','city'=>'Linz','cat'=>'Barbershop','rating'=>4.9,'reviews'=>203,'verified'=>true],
-                    ['name'=>'Lash & Brow Bar','city'=>'Innsbruck','cat'=>'Wimpern & Brauen','rating'=>4.6,'reviews'=>45,'verified'=>false],
-                    ['name'=>'Zen Massage','city'=>'Klagenfurt','cat'=>'Massage','rating'=>4.8,'reviews'=>156,'verified'=>true],
-                ];
-                $demoColors = ['#f5d5e5','#e8f5d5','#e8e0f0','#d5e8f5','#f5ead5','#d5f5eb'];
-                foreach ($demoCards as $i => $d):
-            ?>
-            <div class="home-biz-card">
-                <div class="home-biz-img" style="background:<?= $demoColors[$i] ?>;">
-                    <i class="fas fa-store" style="font-size:2rem;color:rgba(0,0,0,0.12);"></i>
-                    <div class="home-biz-badge"><?= $d['cat'] ?></div>
-                </div>
-                <div class="home-biz-body">
-                    <div class="home-biz-top">
-                        <div class="home-biz-name"><?= $d['name'] ?> <?php if ($d['verified']): ?><i class="fas fa-circle-check" style="color:#42a5f5;font-size:0.85rem;"></i><?php endif; ?></div>
-                        <div class="home-biz-loc"><i class="fas fa-map-marker-alt"></i> <?= $d['city'] ?></div>
-                    </div>
-                    <div class="home-biz-footer">
-                        <div class="home-biz-stars">
-                            <?php for ($s = 1; $s <= 5; $s++): ?>
-                            <i class="fas fa-star" style="color:<?= $s <= round($d['rating']) ? '#ffa726' : '#e0e0e0' ?>;font-size:0.8rem;"></i>
-                            <?php endfor; ?>
-                            <span class="home-biz-rating"><?= $d['rating'] ?> <span style="color:#9e9e9e;font-weight:400;">(<?= $d['reviews'] ?>)</span></span>
-                        </div>
-                        <button class="home-biz-book">Buchen</button>
-                    </div>
-                </div>
+            <?php if (empty($featured)): ?>
+            <div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray-400);">
+                <i class="fas fa-store" style="font-size:2.5rem;margin-bottom:12px;display:block;"></i>
+                <p>Noch keine aktiven Unternehmen vorhanden.</p>
+                <a href="/register.php?type=business" class="btn btn-primary btn-sm" style="margin-top:12px;">Jetzt registrieren</a>
             </div>
-            <?php endforeach; else: foreach ($featured as $biz): ?>
+            <?php else: foreach ($featured as $biz): ?>
             <a href="/business.php?slug=<?= e($biz['slug']) ?>" class="home-biz-card">
                 <div class="home-biz-img" style="background:var(--beige-dark);">
                     <?php if ($biz['cover_image']): ?>
