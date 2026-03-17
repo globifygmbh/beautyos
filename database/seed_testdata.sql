@@ -215,32 +215,34 @@ INSERT INTO `opening_hours` (`business_id`, `day_of_week`, `open_time`, `close_t
 ((SELECT id FROM businesses WHERE slug='zen-massage-wellness-salzburg'), 6, '11:00', '18:00', 0);
 
 -- ── Bewertungen ───────────────────────────────────────────────
+-- Format: user_id, business_id, rating, comment, reply, replied_at, created_at
+
 -- Salon Elegance
 INSERT INTO `reviews` (`user_id`, `business_id`, `rating`, `comment`, `reply`, `replied_at`, `created_at`) VALUES
-((SELECT id FROM users WHERE email='kunde1@test.at'), (SELECT id FROM businesses WHERE slug='salon-elegance-wien'), 5, 'Absolut traumhafter Salon! Sophie hat meine Haare perfekt coloriert, genau das gewünschte Ergebnis. Die Atmosphäre ist super angenehm und das Team sehr professionell. Komme auf jeden Fall wieder!', 'Vielen herzlichen Dank, Maria! Es war uns eine Freude 🌸', NOW()),
+((SELECT id FROM users WHERE email='kunde1@test.at'), (SELECT id FROM businesses WHERE slug='salon-elegance-wien'), 5, 'Absolut traumhafter Salon! Sophie hat meine Haare perfekt coloriert, genau das gewünschte Ergebnis. Die Atmosphäre ist super angenehm und das Team sehr professionell. Komme auf jeden Fall wieder!', 'Vielen herzlichen Dank, Maria! Es war uns eine Freude', NOW(), DATE_SUB(NOW(), INTERVAL 10 DAY)),
 ((SELECT id FROM users WHERE email='kunde2@test.at'), (SELECT id FROM businesses WHERE slug='salon-elegance-wien'), 5, 'Bester Friseur in Wien! Habe den Balayage bekommen und bin begeistert. Sehr gute Beratung, top Ergebnis. Preislich fair für die Qualität.', NULL, NULL, DATE_SUB(NOW(), INTERVAL 3 DAY)),
-((SELECT id FROM users WHERE email='kunde3@test.at'), (SELECT id FROM businesses WHERE slug='salon-elegance-wien'), 4, 'Sehr schöner Salon, freundliches Personal. Haarschnitt top, nur die Wartezeit war etwas länger. Trotzdem sehr empfehlenswert!', 'Danke für dein Feedback! Wir arbeiten daran ⏰', DATE_SUB(NOW(), INTERVAL 1 DAY));
+((SELECT id FROM users WHERE email='kunde3@test.at'), (SELECT id FROM businesses WHERE slug='salon-elegance-wien'), 4, 'Sehr schöner Salon, freundliches Personal. Haarschnitt top, nur die Wartezeit war etwas länger. Trotzdem sehr empfehlenswert!', 'Danke fuer dein Feedback! Wir arbeiten daran', DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_SUB(NOW(), INTERVAL 5 DAY));
 
 -- Nail Art Studio
 INSERT INTO `reviews` (`user_id`, `business_id`, `rating`, `comment`, `reply`, `replied_at`, `created_at`) VALUES
-((SELECT id FROM users WHERE email='kunde4@test.at'), (SELECT id FROM businesses WHERE slug='nail-art-studio-lena'), 5, 'Lena ist eine absolute Künstlerin! Die Nail Art Designs sind unglaublich detailliert. Noch nie so schöne Nägel gehabt. Alle fragen mich wo ich war 😍', 'Das freut mich so sehr, danke!! ❤️', NOW()),
-((SELECT id FROM users WHERE email='kunde5@test.at'), (SELECT id FROM businesses WHERE slug='nail-art-studio-lena'), 5, 'Endlich ein Nagelstudio das vegane Produkte verwendet! Super Qualität, faire Preise und eine super Atmosphäre. Bin Stammkundin!', NULL, NULL, DATE_SUB(NOW(), INTERVAL 5 DAY));
+((SELECT id FROM users WHERE email='kunde4@test.at'), (SELECT id FROM businesses WHERE slug='nail-art-studio-lena'), 5, 'Lena ist eine absolute Kuenstlerin! Die Nail Art Designs sind unglaublich detailliert. Noch nie so schoene Naegel gehabt. Alle fragen mich wo ich war', 'Das freut mich so sehr, danke!!', NOW(), DATE_SUB(NOW(), INTERVAL 8 DAY)),
+((SELECT id FROM users WHERE email='kunde5@test.at'), (SELECT id FROM businesses WHERE slug='nail-art-studio-lena'), 5, 'Endlich ein Nagelstudio das vegane Produkte verwendet! Super Qualitaet, faire Preise und eine super Atmosphaere. Bin Stammkundin!', NULL, NULL, DATE_SUB(NOW(), INTERVAL 5 DAY));
 
 -- Glow Kosmetik
 INSERT INTO `reviews` (`user_id`, `business_id`, `rating`, `comment`, `reply`, `replied_at`, `created_at`) VALUES
-((SELECT id FROM users WHERE email='kunde1@test.at'), (SELECT id FROM businesses WHERE slug='glow-kosmetikstudio-graz'), 5, 'Das Microneedling hat meine Haut wirklich transformiert! Anna ist super professionell und erklärt alles genau. Meine Haut war noch nie so straff. Absolute Empfehlung!', 'Danke, das motiviert uns! Wir freuen uns auf deinen nächsten Besuch 🌟', DATE_SUB(NOW(), INTERVAL 2 DAY)),
+((SELECT id FROM users WHERE email='kunde1@test.at'), (SELECT id FROM businesses WHERE slug='glow-kosmetikstudio-graz'), 5, 'Das Microneedling hat meine Haut wirklich transformiert! Anna ist super professionell und erklaert alles genau. Meine Haut war noch nie so straff. Absolute Empfehlung!', 'Danke, das motiviert uns! Wir freuen uns auf deinen naechsten Besuch', DATE_SUB(NOW(), INTERVAL 2 DAY), DATE_SUB(NOW(), INTERVAL 9 DAY)),
 ((SELECT id FROM users WHERE email='kunde3@test.at'), (SELECT id FROM businesses WHERE slug='glow-kosmetikstudio-graz'), 4, 'Sehr angenehmes Studio, kompetente Beratung. Die Gesichtsbehandlung war entspannend und die Haut danach super. Gerne wieder!', NULL, NULL, DATE_SUB(NOW(), INTERVAL 7 DAY));
 
 -- Barber Club
 INSERT INTO `reviews` (`user_id`, `business_id`, `rating`, `comment`, `reply`, `replied_at`, `created_at`) VALUES
-((SELECT id FROM users WHERE email='kunde2@test.at'), (SELECT id FROM businesses WHERE slug='the-barber-club-wien'), 5, 'Bester Barbershop der Stadt, keine Diskussion. Die Nassrasur mit Rasiermesser ist ein absolutes Erlebnis. Fühle mich danach wie neu. Das Ambiente ist klasse!', 'Danke Markus! Das ist genau das Gefühl das wir vermitteln wollen 💈', NOW()),
-((SELECT id FROM users WHERE email='kunde4@test.at'), (SELECT id FROM businesses WHERE slug='the-barber-club-wien'), 5, 'Perfekter Haarschnitt, super Service und sogar ein Whiskey dabei! So macht Friseurbesuch Spaß. Klare Empfehlung für jeden Mann in Wien.', NULL, NULL, DATE_SUB(NOW(), INTERVAL 4 DAY)),
-((SELECT id FROM users WHERE email='kunde5@test.at'), (SELECT id FROM businesses WHERE slug='the-barber-club-wien'), 4, 'Toller Laden, sehr stylisches Ambiente. Haarschnitt war top. Einziger Kritikpunkt: Online-Terminbuchung könnte etwas einfacher sein.', 'Danke für den Hinweis! Arbeiten dran 💪', DATE_SUB(NOW(), INTERVAL 2 DAY));
+((SELECT id FROM users WHERE email='kunde2@test.at'), (SELECT id FROM businesses WHERE slug='the-barber-club-wien'), 5, 'Bester Barbershop der Stadt, keine Diskussion. Die Nassrasur mit Rasiermesser ist ein absolutes Erlebnis. Fuehl mich danach wie neu. Das Ambiente ist klasse!', 'Danke! Das ist genau das Gefuehl das wir vermitteln wollen', NOW(), DATE_SUB(NOW(), INTERVAL 12 DAY)),
+((SELECT id FROM users WHERE email='kunde4@test.at'), (SELECT id FROM businesses WHERE slug='the-barber-club-wien'), 5, 'Perfekter Haarschnitt, super Service und sogar ein Whiskey dabei! So macht Friseurbesuch Spass. Klare Empfehlung fuer jeden Mann in Wien.', NULL, NULL, DATE_SUB(NOW(), INTERVAL 4 DAY)),
+((SELECT id FROM users WHERE email='kunde5@test.at'), (SELECT id FROM businesses WHERE slug='the-barber-club-wien'), 4, 'Toller Laden, sehr stylisches Ambiente. Haarschnitt war top. Einziger Kritikpunkt: Online-Terminbuchung koennte etwas einfacher sein.', 'Danke fuer den Hinweis! Arbeiten dran', DATE_SUB(NOW(), INTERVAL 2 DAY), DATE_SUB(NOW(), INTERVAL 6 DAY));
 
 -- Zen Massage
 INSERT INTO `reviews` (`user_id`, `business_id`, `rating`, `comment`, `reply`, `replied_at`, `created_at`) VALUES
-((SELECT id FROM users WHERE email='kunde1@test.at'), (SELECT id FROM businesses WHERE slug='zen-massage-wellness-salzburg'), 5, 'Die Hot Stone Massage war das Entspannendste was ich je erlebt habe! Julia hat einen sensationellen Druck und sehr einfühlsame Hände. Danach komplett tiefenentspannt. Vielen Dank!', 'Das hören wir sehr gerne! Bis zum nächsten Mal 🪨✨', DATE_SUB(NOW(), INTERVAL 1 DAY)),
-((SELECT id FROM users WHERE email='kunde3@test.at'), (SELECT id FROM businesses WHERE slug='zen-massage-wellness-salzburg'), 5, 'Wunderschönes ruhiges Studio, absolute Wohlfühlatmosphäre. Thai-Massage war perfekt intensiv. Komme regelmäßig her, beste Investition in mich selbst!', NULL, NULL, DATE_SUB(NOW(), INTERVAL 6 DAY));
+((SELECT id FROM users WHERE email='kunde1@test.at'), (SELECT id FROM businesses WHERE slug='zen-massage-wellness-salzburg'), 5, 'Die Hot Stone Massage war das Entspannendste was ich je erlebt habe! Julia hat einen sensationellen Druck und sehr einf&uuml;hlsame Haende. Danach komplett tiefenentspannt. Vielen Dank!', 'Das hoeren wir sehr gerne! Bis zum naechsten Mal', DATE_SUB(NOW(), INTERVAL 1 DAY), DATE_SUB(NOW(), INTERVAL 11 DAY)),
+((SELECT id FROM users WHERE email='kunde3@test.at'), (SELECT id FROM businesses WHERE slug='zen-massage-wellness-salzburg'), 5, 'Wunderschoenes ruhiges Studio, absolute Wohlfuehlatmosphaere. Thai-Massage war perfekt intensiv. Komme regelmaessig her, beste Investition in mich selbst!', NULL, NULL, DATE_SUB(NOW(), INTERVAL 6 DAY));
 
 SET FOREIGN_KEY_CHECKS = 1;
 
