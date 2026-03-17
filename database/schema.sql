@@ -222,3 +222,78 @@ INSERT INTO `subscription_plans` (`name`, `slug`, `price_monthly`, `max_images`,
 -- ============================================
 INSERT INTO `users` (`email`, `password_hash`, `first_name`, `last_name`, `role`, `email_verified_at`) VALUES
 ('admin@beautyos.at', '$2y$12$8ki9mLkQbd/g3KpXj3kXWuRytV/874Z4UiFhMup3M9p5xmiTQb7aO', 'Admin', 'BeautyOS', 'admin', NOW());
+
+-- ============================================
+-- LEGAL PAGES
+-- ============================================
+CREATE TABLE `legal_pages` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `slug` VARCHAR(50) NOT NULL UNIQUE,
+    `title` VARCHAR(255) NOT NULL,
+    `content` LONGTEXT DEFAULT NULL,
+    `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+INSERT INTO `legal_pages` (`slug`, `title`, `content`) VALUES
+('impressum', 'Impressum', '<h2>Impressum</h2><p>Angaben gemäß § 5 TMG</p><p><strong>Ihr Name / Firmenname</strong><br>Straße Nr.<br>PLZ Stadt</p><p>E-Mail: info@example.at<br>Tel: +43 000 000000</p><h3>Haftungsausschluss</h3><p>Bitte ergänzen Sie hier Ihre vollständigen Angaben.</p>'),
+('datenschutz', 'Datenschutzerklärung', '<h2>Datenschutzerklärung</h2><p>Der Schutz Ihrer persönlichen Daten ist uns ein besonderes Anliegen. Wir verarbeiten Ihre Daten daher ausschließlich auf Grundlage der gesetzlichen Bestimmungen (DSGVO, TKG 2003).</p><h3>Kontakt mit uns</h3><p>Wenn Sie per Formular auf der Website oder per E-Mail Kontakt mit uns aufnehmen, werden Ihre angegebenen Daten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen sechs Monate bei uns gespeichert.</p><p>Bitte ergänzen Sie hier Ihre vollständige Datenschutzerklärung.</p>'),
+('agb', 'Allgemeine Geschäftsbedingungen', '<h2>Allgemeine Geschäftsbedingungen</h2><h3>§ 1 Geltungsbereich</h3><p>Diese Allgemeinen Geschäftsbedingungen gelten für alle Leistungen, die über die Plattform BeautyOS erbracht werden.</p><h3>§ 2 Vertragsschluss</h3><p>Bitte ergänzen Sie hier Ihre vollständigen AGB.</p>');
+
+-- ============================================
+-- ANALYTICS EVENTS
+-- ============================================
+CREATE TABLE `analytics_events` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `event_type` VARCHAR(50) NOT NULL,
+    `entity_type` VARCHAR(50) DEFAULT NULL,
+    `entity_id` INT DEFAULT NULL,
+    `page` VARCHAR(255) DEFAULT NULL,
+    `referrer` VARCHAR(500) DEFAULT NULL,
+    `ip_hash` VARCHAR(64) DEFAULT NULL,
+    `country` VARCHAR(2) DEFAULT NULL,
+    `city` VARCHAR(100) DEFAULT NULL,
+    `user_agent` VARCHAR(500) DEFAULT NULL,
+    `extra` JSON DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_event_type` (`event_type`),
+    INDEX `idx_entity` (`entity_type`, `entity_id`),
+    INDEX `idx_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- ============================================
+-- SEARCH LOGS
+-- ============================================
+CREATE TABLE `search_logs` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `query` VARCHAR(500) DEFAULT NULL,
+    `category` VARCHAR(120) DEFAULT NULL,
+    `location` VARCHAR(255) DEFAULT NULL,
+    `results_count` INT NOT NULL DEFAULT 0,
+    `ip_hash` VARCHAR(64) DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX `idx_query` (`query`(100)),
+    INDEX `idx_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- ============================================
+-- STRIPE PAYMENTS
+-- ============================================
+CREATE TABLE `stripe_payments` (
+    `id` INT AUTO_INCREMENT PRIMARY KEY,
+    `user_id` INT NOT NULL,
+    `business_id` INT DEFAULT NULL,
+    `plan_id` INT DEFAULT NULL,
+    `stripe_session_id` VARCHAR(255) DEFAULT NULL,
+    `stripe_payment_intent` VARCHAR(255) DEFAULT NULL,
+    `amount` DECIMAL(10,2) NOT NULL,
+    `currency` VARCHAR(3) NOT NULL DEFAULT 'EUR',
+    `status` ENUM('pending','paid','failed','refunded') NOT NULL DEFAULT 'pending',
+    `period_start` DATE DEFAULT NULL,
+    `period_end` DATE DEFAULT NULL,
+    `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`business_id`) REFERENCES `businesses`(`id`) ON DELETE SET NULL,
+    FOREIGN KEY (`plan_id`) REFERENCES `subscription_plans`(`id`) ON DELETE SET NULL,
+    INDEX `idx_status` (`status`),
+    INDEX `idx_created` (`created_at`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;

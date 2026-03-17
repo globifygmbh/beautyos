@@ -29,12 +29,12 @@
                     </ul>
                 </div>
                 <div>
-                    <h4>Support</h4>
+                    <h4>Rechtliches</h4>
                     <ul class="footer-links">
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="/impressum">Impressum</a></li>
+                        <li><a href="/datenschutz">Datenschutz</a></li>
+                        <li><a href="/agb">AGB</a></li>
                         <li><a href="#">Kontakt</a></li>
-                        <li><a href="#">Datenschutz</a></li>
-                        <li><a href="#">Impressum</a></li>
                     </ul>
                 </div>
             </div>
@@ -55,5 +55,17 @@
 
     <!-- App JS -->
     <script src="/assets/js/app.js"></script>
+    <!-- Analytics Tracking -->
+    <script>
+    (function(){
+        var page = window.location.pathname;
+        fetch('/api/track.php', {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ event_type:'page_view', page: page }),
+            keepalive: true
+        }).catch(function(){});
+    })();
+    </script>
 </body>
 </html>

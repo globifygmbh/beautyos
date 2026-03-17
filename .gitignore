@@ -2,6 +2,7 @@
 .env
 config/database.local.php
 config/database.php
+config/stripe.php
 
 # Uploads
 uploads/*
